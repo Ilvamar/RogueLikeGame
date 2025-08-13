@@ -1,9 +1,9 @@
 body {
-    background-color: #111; /* Темный фон для игры, чтобы прозрачные области не показывали белый */
+    background-color: #111;
 }
 
 .field {
-    width: 1280px; /* 40 * 32px */
+    width: 1280px;
     display: flex;
     flex-wrap: wrap;
 }
