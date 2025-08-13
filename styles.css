@@ -1,0 +1,62 @@
+body {
+    background-color: #111; /* Темный фон для игры, чтобы прозрачные области не показывали белый */
+}
+
+.field {
+    width: 1280px; /* 40 * 32px */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile {
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+.wall {
+    background-image: url('wall.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.floor {
+    background-image: url('floor.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.item, .entity {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero {
+    background-image: url('hero.png');
+}
+
+.enemy {
+    background-image: url('enemy.png');
+}
+
+.sword {
+    background-image: url('sword.png');
+}
+
+.potion {
+    background-image: url('potion.png');
+}
+
+.health {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: green;
+}
