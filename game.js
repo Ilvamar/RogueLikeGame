@@ -5,6 +5,7 @@ var rooms = [];
 var items = [];
 var hero = { health: 100, maxHealth: 100, attack: 10 };
 var enemies = [];
+var level = 1;
 
 function init() {
     generateMap();
@@ -221,12 +222,15 @@ function placeHero() {
 
 function placeEnemies() {
     var i, pos;
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 10 + level; i++) {
         pos = getRandomFloor();
         while (isOccupied(pos.x, pos.y)) {
             pos = getRandomFloor();
         }
-        enemies.push({ x: pos.x, y: pos.y, health: 50, maxHealth: 50, attack: 5 });
+        if(i < 10)
+            enemies.push({ x: pos.x, y: pos.y, health: 50, maxHealth: 50, attack: 5 });
+        else
+            enemies.push({ x: pos.x, y: pos.y, health: 70, maxHealth: 70, attack: 8 });
     }
 }
 
@@ -262,7 +266,7 @@ function render() {
                 }
                 for (i = 0; i < enemies.length; i++) {
                     if (enemies[i].x === x && enemies[i].y === y) {
-                        var entityDiv = $('<div class="entity enemy"></div>');
+                        var entityDiv = $('<div class="entity enemy1"></div>');
                         hp = (enemies[i].health / enemies[i].maxHealth) * 100;
                         entityDiv.append('<div class="health" style="width: ' + hp + '%;"></div>');
                         tile.append(entityDiv);
@@ -325,7 +329,8 @@ function attackEnemies() {
         }
     }
     if (enemies.length === 0) {
-        alert('Вы выиграли!');
+        alert(`Уровень ${level} пройден.`);
+        level++;
         init();
     }
 }
