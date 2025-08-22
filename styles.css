@@ -15,13 +15,13 @@ body {
 }
 
 .wall {
-    background-image: url('wall.png');
+    background-image: url('images/wall.png');
     background-size: cover;
     background-position: center;
 }
 
 .floor {
-    background-image: url('floor.png');
+    background-image: url('images/floor.png');
     background-size: cover;
     background-position: center;
 }
@@ -38,19 +38,19 @@ body {
 }
 
 .hero {
-    background-image: url('hero.png');
+    background-image: url('images/heros/hero.png');
 }
 
 .enemy {
-    background-image: url('enemy.png');
+    background-image: url('/images/villan/enemy1.png');
 }
 
 .sword {
-    background-image: url('sword.png');
+    background-image: url('images/item/sword.png');
 }
 
 .potion {
-    background-image: url('potion.png');
+    background-image: url('images/item/healPotion.png');
 }
 
 .health {
