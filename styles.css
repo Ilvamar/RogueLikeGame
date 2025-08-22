@@ -38,11 +38,11 @@ body {
 }
 
 .hero {
-    background-image: url('images/heros/hero.png');
+    background-image: url('images/heros/hero1.png');
 }
 
 .enemy {
-    background-image: url('/images/villan/enemy1.png');
+    background-image: url('images/villan/enemy1.png');
 }
 
 .sword {
