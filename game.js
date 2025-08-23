@@ -300,11 +300,26 @@ function enemiesTurn() {
     var i, d, dirs, nx, ny;
     for (i = 0; i < enemies.length; i++) {
         var en = enemies[i];
-        if (isAdjacent(en, hero)) {
-            hero.health -= en.attack;
-            if (hero.health <= 0) {
-                alert('Игра окончена!');
-                init();
+        if(enemyAgres(en, hero) <= 5 ){
+            dx = hero.x - en.x;
+            dy = hero.y - en.y;
+            if (Math.abs(dx) > Math.abs(dy)){
+                nx = en.x + (dx >0 ? 1 : -1);
+                ny = en.y;
+            } else {
+                nx = en.x;
+                ny = en.y + (dy >0 ? 1 : -1);
+            }
+            if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && map[ny][nx] === 1 && !isOccupied(nx, ny)) {
+                    en.x = nx;
+                    en.y = ny;
+                }
+            if (isAdjacent(en, hero)) {
+                hero.health -= en.attack;
+                if (hero.health <= 0) {
+                    alert('Игра окончена!');
+                    init();
+                }
             }
         } else {
             dirs = [{dx: -1, dy: 0}, {dx: 1, dy: 0}, {dx: 0, dy: -1}, {dx: 0, dy: 1}];
@@ -312,8 +327,7 @@ function enemiesTurn() {
             for (d = 0; d < dirs.length; d++) {
                 nx = en.x + dirs[d].dx;
                 ny = en.y + dirs[d].dy;
-                if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && map[ny][nx] === 1 &&
-                    !isOccupied(nx, ny)) {
+                if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && map[ny][nx] === 1 &&!isOccupied(nx, ny)) {
                     en.x = nx;
                     en.y = ny;
                     break;
@@ -346,6 +360,10 @@ function attackEnemies() {
         resetLevel();
         init();
     }
+}
+
+function enemyAgres(pos1, pos2){
+    return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y);
 }
 
 $(document).ready(function() {
