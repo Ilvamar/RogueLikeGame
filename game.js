@@ -15,6 +15,14 @@ function init() {
     render();
 }
 
+function resetLevel(){
+    map = [];
+    rooms = [];
+    items = [];
+    enemies = [];
+    hero.health = hero.maxHealth;
+}
+
 function generateMap() {
     var y, x, i;
     for (y = 0; y < HEIGHT; y++) {
@@ -197,7 +205,8 @@ function getRandomFloor() {
 
 function placeItems() {
     placeRandomItem('sword', 2);
-    placeRandomItem('potion', 10);
+    placeRandomItem('healPotion', 9+level);
+    placeRandomItem('healthUp', 1);
 }
 
 function placeRandomItem(type, count) {
@@ -222,15 +231,15 @@ function placeHero() {
 
 function placeEnemies() {
     var i, pos;
-    for (i = 0; i < 10 + level; i++) {
+    for (i = 0; i < 9 + level; i++) {
         pos = getRandomFloor();
         while (isOccupied(pos.x, pos.y)) {
             pos = getRandomFloor();
         }
         if(i < 10)
-            enemies.push({ x: pos.x, y: pos.y, health: 50, maxHealth: 50, attack: 5 });
+            enemies.push({ x: pos.x, y: pos.y, health: 50, maxHealth: 50, attack: 5, typ: 1});
         else
-            enemies.push({ x: pos.x, y: pos.y, health: 70, maxHealth: 70, attack: 8 });
+            enemies.push({ x: pos.x, y: pos.y, health: 100, maxHealth: 100, attack: 9, typ: 2});
     }
 }
 
@@ -266,7 +275,10 @@ function render() {
                 }
                 for (i = 0; i < enemies.length; i++) {
                     if (enemies[i].x === x && enemies[i].y === y) {
-                        var entityDiv = $('<div class="entity enemy1"></div>');
+                        if(enemies[i].typ == 1)
+                            var entityDiv = $('<div class="entity enemy1"></div>');
+                        else if(enemies[i].typ == 2)
+                            var entityDiv = $('<div class="entity enemy2"></div>');
                         hp = (enemies[i].health / enemies[i].maxHealth) * 100;
                         entityDiv.append('<div class="health" style="width: ' + hp + '%;"></div>');
                         tile.append(entityDiv);
@@ -331,6 +343,7 @@ function attackEnemies() {
     if (enemies.length === 0) {
         alert(`Уровень ${level} пройден.`);
         level++;
+        resetLevel();
         init();
     }
 }
@@ -359,10 +372,12 @@ $(document).ready(function() {
                 }
                 if (itemIndex !== -1) {
                     var it = items[itemIndex];
-                    if (it.type === 'potion') {
+                    if (it.type === 'healPotion') {
                         hero.health = Math.min(hero.health + 50, hero.maxHealth);
                     } else if (it.type === 'sword') {
-                        hero.attack += 10;
+                        hero.attack += 5;
+                    } else if (it.type === 'healthUp'){
+                        hero.maxHealth += 35;
                     }
                     items.splice(itemIndex, 1);
                 }

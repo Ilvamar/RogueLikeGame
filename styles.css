@@ -45,13 +45,23 @@ body {
     background-image: url('images/villan/enemy1.png');
 }
 
+.enemy2 {
+    background-image: url('images/villan/enemy2.png');
+}
+
 .sword {
     background-image: url('images/item/sword.png');
 }
 
-.potion {
+.healPotion {
     background-image: url('images/item/healPotion.png');
 }
+
+.healthUp{
+    background-image: url('images/item/helthUp.png');
+}
+
+
 
 .health {
     position: absolute;
