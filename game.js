@@ -238,8 +238,10 @@ function placeEnemies() {
         }
         if(i < 10)
             enemies.push({ x: pos.x, y: pos.y, health: 50, maxHealth: 50, attack: 5, typ: 1});
-        else
+        else if (i < 14)
             enemies.push({ x: pos.x, y: pos.y, health: 100, maxHealth: 100, attack: 9, typ: 2});
+        else
+            enemies.push({ x: pos.x, y: pos.y, health: 250, maxHealth: 250, attack: 20, typ: 3, rangeAttTimer: 0});
     }
 }
 
@@ -279,6 +281,8 @@ function render() {
                             var entityDiv = $('<div class="entity enemy1"></div>');
                         else if(enemies[i].typ == 2)
                             var entityDiv = $('<div class="entity enemy2"></div>');
+                        else if(enemies[i].typ == 3)
+                            var entityDiv = $('<div class="entity enemy3"></div>');
                         hp = (enemies[i].health / enemies[i].maxHealth) * 100;
                         entityDiv.append('<div class="health" style="width: ' + hp + '%;"></div>');
                         tile.append(entityDiv);
@@ -300,7 +304,7 @@ function enemiesTurn() {
     var i, d, dirs, nx, ny;
     for (i = 0; i < enemies.length; i++) {
         var en = enemies[i];
-        if(enemyAgres(en, hero) <= 5 ){
+        if(enemyDist(en, hero) <= 5 ){
             dx = hero.x - en.x;
             dy = hero.y - en.y;
             if (Math.abs(dx) > Math.abs(dy)){
@@ -313,7 +317,15 @@ function enemiesTurn() {
             if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && map[ny][nx] === 1 && !isOccupied(nx, ny)) {
                     en.x = nx;
                     en.y = ny;
-                }
+            }
+            if(en.typ == 3 && enemyDist(en, hero) <= 3){
+                if(en.rangeAttTimer == 0){
+                    hero.health -= en.attack;
+                    en.rangeAttTimer = 2;
+                } else
+                    en.rangeAttTimer--;
+            }
+
             if (isAdjacent(en, hero)) {
                 hero.health -= en.attack;
                 if (hero.health <= 0) {
@@ -362,7 +374,7 @@ function attackEnemies() {
     }
 }
 
-function enemyAgres(pos1, pos2){
+function enemyDist(pos1, pos2){
     return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y);
 }
 

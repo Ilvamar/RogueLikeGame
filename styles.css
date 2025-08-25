@@ -49,6 +49,10 @@ body {
     background-image: url('images/villan/enemy2.png');
 }
 
+.enemy3 {
+    background-image: url('images/villan/enemy3.png');
+}
+
 .sword {
     background-image: url('images/item/sword.png');
 }
