@@ -330,6 +330,8 @@ function enemiesTurn() {
                 hero.health -= en.attack;
                 if (hero.health <= 0) {
                     alert('Игра окончена!');
+                    level = 1;
+                    resetLevel();
                     init();
                 }
             }
