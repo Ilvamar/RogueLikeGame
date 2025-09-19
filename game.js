@@ -90,23 +90,16 @@ function generateMap() {
 
     var numHor = Math.floor(Math.random() * 3) + 3;
     for (i = 0; i < numHor; i++) {
-        var start = getRandomFloor();
-        y = start.y;
-        var xstart = start.x;
-        var len = Math.floor(Math.random() * 10) + 3;
-        var dir = Math.random() < 0.5 ? 1 : -1;
-        for (x = xstart; x >= 0 && x < WIDTH && Math.abs(x - xstart) < len; x += dir) {
+        y = Math.floor(Math.random() * HEIGHT);
+        for (x = 0; x < WIDTH; x++) {
             map[y][x] = 1;
         }
     }
+
     var numVer = Math.floor(Math.random() * 3) + 3;
     for (i = 0; i < numVer; i++) {
-        var start = getRandomFloor();
-        x = start.x;
-        var ystart = start.y;
-        var len = Math.floor(Math.random() * 10) + 3;
-        var dir = Math.random() < 0.5 ? 1 : -1;
-        for (y = ystart; y >= 0 && y < HEIGHT && Math.abs(y - ystart) < len; y += dir) {
+        x = Math.floor(Math.random() * WIDTH);
+        for (y = 0; y < HEIGHT; y++) {
             map[y][x] = 1;
         }
     }
